@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         *  */
         if(!pref.contains(loginStatus))
         {
-            editor.putString(loginStatus, loggedIn);
-            editor.commit();
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
+            /*editor.putString(loginStatus, loggedIn);
+            editor.commit();*/
+            Intent intent = new Intent(this, Signup.class);
+            startActivityForResult(intent, 2);
         }
 
         b1 = (Button) findViewById(R.id.button1);
@@ -42,5 +42,38 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     public void onClick(View v) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode == 2) {
+
+            if(data != null){
+                String message = data.getStringExtra("MESSAGE");
+
+                if (message.equals("successful")) {
+                    editor.putString(loginStatus, loggedIn);
+                    editor.commit();
+                } else if (message.equals("unsuccessful")) {
+                    Intent intent = new Intent(this, Signup.class);
+                    startActivityForResult(intent, 2);
+                }
+            }
+            else
+            {
+                finish();
+            }
+
+            //String message=data.getStringExtra("MESSAGE");
+            //textView1.setText(message);
+        }
+
+        /*if(requestCode == 0)
+        {
+            Intent intent = new Intent(this, Signup.class);
+            startActivityForResult(intent, 2);
+        }*/
     }
 }

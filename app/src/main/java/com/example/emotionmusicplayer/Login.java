@@ -46,6 +46,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         }
         if(v == link_signup)
         {
+            System.out.println("SIGNUP");
             Intent intent = new Intent(this, Signup.class);
             startActivity(intent);
         }
